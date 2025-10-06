@@ -1,5 +1,7 @@
+# Dockerfile for MongoDB Development Environment
 FROM mongo:8-noble
 
+# Metadata
 LABEL name="Database"
 LABEL authors="Adrián Constante @ RED2000"
 LABEL description="MongoDB Dev Environment"
@@ -11,7 +13,4 @@ WORKDIR /database
 EXPOSE 27017
 
 # Run MongoDB server
-RUN mongosh --version
-
-# Check MongoDB version
 CMD ["mongod"]

@@ -11,8 +11,6 @@ services:
     env_file:
       - path: .env.dev
         required: true
-    environment:
-    - API_URL=${API_HOST}:${API_PORT}
     networks:
       - dev-network
     ports:
