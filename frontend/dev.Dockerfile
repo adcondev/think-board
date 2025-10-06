@@ -7,8 +7,12 @@ LABEL description="React Dev Environment"
 # Set the working directory in the container
 WORKDIR /frontend
 
+# COPY package*.json ./
+
 # Install dependencies
 # RUN npm install
+
+# COPY . .
 
 # Expose the server port
 EXPOSE 3000

@@ -3,15 +3,13 @@ name: app
 services:
   frontend:
     build:
-      context: .
-      dockerfile: frontend/dev.Dockerfile
-    volumes:
-      - ./frontend:/frontend
+      context: ./frontend
+      dockerfile: dev.Dockerfile
     depends_on:
       backend:
         condition: service_started
     env_file:
-      - path: ./dev.env
+      - path: .env.dev
         required: true
     environment:
     - API_URL=${API_HOST}:${API_PORT}
@@ -22,15 +20,13 @@ services:
 
   backend:
     build: 
-      context: .
-      dockerfile: backend/dev.Dockerfile
-    volumes:
-      - ./backend:/backend
+      context: ./backend
+      dockerfile: dev.Dockerfile
     depends_on:
       database:
         condition: service_healthy
     env_file:
-      - path: ./dev.env
+      - path: .env.dev
         required: true
     environment:
       - MONGO_URL=mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@${MONGO_HOST}:${MONGO_PORT}/${MONGO_INITDB_ROOT_DATABASE}
@@ -44,7 +40,7 @@ services:
       context: .
       dockerfile: database/dev.Dockerfile
     volumes:
-      - mongodb-data:/data/db
+      - mongodb-data:/data/db:cached
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]

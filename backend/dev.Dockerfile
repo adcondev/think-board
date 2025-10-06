@@ -7,8 +7,13 @@ LABEL description="Node.js Dev Environment"
 # Set the working directory in the container
 WORKDIR /backend
 
+COPY ./package*.json ./
+
 # Install dependencies
-# RUN npm install
+RUN npm install
+
+# Copy application code
+COPY . .
 
 # Expose the development server port
 EXPOSE 5000
@@ -17,6 +22,6 @@ EXPOSE 5000
 RUN node --version && npm --version
 
 # CMD to keep the container running
-CMD ["tail", "-f", "/dev/null"]
+CMD ["npm", "run", "dev"]
 
 
